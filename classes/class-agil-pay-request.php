@@ -56,10 +56,6 @@ class AgilPayRequest {
 		$authorizationRequest->CVV = AgilPayRequest::$cvv;
 
 		$resultPayment = $client->Authorize( $authorizationRequest->getData() );
-		
     }
 
-    public static function includesModels( ) {
-		
-    }
 }
