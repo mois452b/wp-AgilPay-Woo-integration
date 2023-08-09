@@ -2,12 +2,8 @@
 
 class AgilPayRequest {
     public static function request( ) {
+        self::includesModels( );
 
-		require_once './ApiClient.php';
-		require_once '../models/AccountType.php';
-		require_once '../models/BalanceRequest.php';
-		require_once '../models/AuthorizationRequest.php';
-		
 		$client = new ApiClient("https://sandbox-webapi.agilpay.net/");
 		// OAUTH 2.
 		$result = false;
@@ -53,5 +49,13 @@ class AgilPayRequest {
 
 		$resultPayment = $client->Authorize( $authorizationRequest->getData() );
 
+    }
+
+    public static function includesModels( ) {
+		require_once './ApiClient.php';
+		require_once '../models/class-account-type.php';
+		require_once '../models/class-balance-request.php';
+		require_once '../models/class-authorization-request.php';
+		
     }
 }
