@@ -13,7 +13,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 
 		$this->id                 = 'agilpay';
 		$this->icon               = apply_filters( 'woocommerce_agilpay_icon', '' );
-		$this->has_fields         = false;
+		$this->has_fields         = true;
 		$this->order_button_text  = "Pagar con Agil Pay";
 		$this->method_title       = "Agil Pay Methods";
 		$this->method_description = "Agil Pay Methods Description";
@@ -21,7 +21,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 
 		// Load the settings.
 		$this->init_form_fields();
-		// $this->init_settings();
+		$this->init_settings();
 
 		// Actions.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -63,13 +63,46 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 
-		include 'lo-que-moises-haga.php';
-
-		WC()->cart->empty_cart();
+		// WC()->cart->empty_cart();
 		return array(
 			'result'   => 'success',
 			'redirect' => $this->get_return_url( $order ),
 		);
+	}
+
+	public function payment_fields(){
+		?>
+		<div>
+        	<h3>Detalles de Pago</h3>
+        	<p>Por favor, ingresa los detalles de tu tarjeta de crédito o débito:</p>
+			<table>
+				<tr>
+					<th>
+						<label for="agilpay_card_number">Número de Tarjeta:</label>
+					</th>
+					<td>
+						<input type="number" id="agilpay_card_number" name="agilpay_card_number" placeholder="XXXX-XXXX-XXXX-XXXX" required />
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="agilpay_card_expiry">Fecha de Expiración:</label>
+					</th>
+					<td>
+						<input type="date" id="agilpay_card_expiry" name="agilpay_card_expiry" placeholder="MM/AA" required />
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="agilpay_card_cvv">CVV:</label>
+					</th>
+					<td>
+						<input type="number" id="agilpay_card_cvv" name="agilpay_card_cvv" placeholder="000" required />
+					</td>
+				</tr>
+			</table>
+        </div>
+		<?php
 	}
 
 }
