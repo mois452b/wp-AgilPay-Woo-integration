@@ -1,54 +1,56 @@
 <?php
 
 class AgilPayRequest {
+    public static $url          = 'https://sandbox-webapi.agilpay.net/';
+    public static $client_id    = 'API-001';
+    public static $secret       = 'Dynapay';
+    public static $merchant_key = 'TEST-001';
+    public static $customer_id  = '123456';
+
+    // PAYMENT VALUES
+    public static $amount   = "1.02";
+    public static $card     = "4242424242424242";
+    public static $month    = "01";
+    public static $year     = "29";
+    public static $zipcode  = "33167";
+    public static $cvv      = "123";
+
     public static function request( ) {
         self::includesModels( );
 
-		$client = new ApiClient("https://sandbox-webapi.agilpay.net/");
+		$client = new ApiClient( AgilPayRequest::$url );
 		// OAUTH 2.
 		$result = false;
+		$result = $client->Init( AgilPayRequest::$client_id, AgilPayRequest::$secret );
 
-		$client_id = "API-001";
-		$secret = "Dynapay";
+        // CUSTOMER TOKENS
+		$resultTokens = $client->GetCustomerTokens( AgilPayRequest::$customer_id );
 
-		$result = $client->Init($client_id, $secret);
 		// Balance
-		$merchant_key = "TEST-001";
-		$customer_id = "123456";
-		$resultTokens = $client->GetCustomerTokens($customer_id);
+		$balanceRequest = new BalanceRequest( );
+		$balanceRequest->MerchantKey = AgilPayRequest::$merchant_key;
+		$balanceRequest->CustomerId = AgilPayRequest::$customer_id;
+		$resultBalance = $client->GetBalance( $balanceRequest );
 
-		$balanceRequest = new BalanceRequest();
-		$balanceRequest->MerchantKey = $merchant_key;
-		$balanceRequest->CustomerId = $customer_id;
-		$resultBalance = $client->GetBalance($balanceRequest);
-
-		// PAYMENT
-		$amount = "1.02";
-		$card = "4242424242424242";
-		$month = "01";
-		$year = "29";
-		$zipcode = "33167";
-		$cvv = "123";
-
+        // PAYMENT
 		$authorizationRequest = new AuthorizationRequest();
-		$authorizationRequest->MerchantKey = $merchant_key;
-		$authorizationRequest->AccountNumber = $card;
-		$authorizationRequest->ExpirationMonth = $month;
-		$authorizationRequest->ExpirationYear = $year;
+		$authorizationRequest->MerchantKey = AgilPayRequest::$merchant_key;
+		$authorizationRequest->AccountNumber = AgilPayRequest::$card;
+		$authorizationRequest->ExpirationMonth = AgilPayRequest::$month;
+		$authorizationRequest->ExpirationYear = AgilPayRequest::$year;
 		$authorizationRequest->CustomerName = "Test User";
-		$authorizationRequest->CustomerID = $customer_id;
+		$authorizationRequest->CustomerID = AgilPayRequest::$customer_id;
 		$authorizationRequest->AccountType = AccountType::Credit_Debit;
 		$authorizationRequest->CustomerEmail = "testuser@gmail.com";
-		$authorizationRequest->ZipCode = $zipcode;
-		$authorizationRequest->Amount = $amount;
+		$authorizationRequest->ZipCode = AgilPayRequest::$zipcode;
+		$authorizationRequest->Amount = AgilPayRequest::$amount;
 		$authorizationRequest->Currency = "840";
 		$authorizationRequest->Tax = "0";
 		$authorizationRequest->Invoice = "123465465";
 		$authorizationRequest->Transaction_Detail = "payment information detail";
-		$authorizationRequest->CVV = $cvv;
+		$authorizationRequest->CVV = AgilPayRequest::$cvv;
 
 		$resultPayment = $client->Authorize( $authorizationRequest->getData() );
-
     }
 
     public static function includesModels( ) {
