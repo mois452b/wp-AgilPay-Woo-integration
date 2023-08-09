@@ -1,5 +1,12 @@
 <?php
 
+defined( 'ABSPATH' ) || exit;
+
+require_once './ApiClient.php';
+require_once '../models/class-account-type.php';
+require_once '../models/class-balance-request.php';
+require_once '../models/class-authorization-request.php';
+
 class AgilPayRequest {
     public static $url          = 'https://sandbox-webapi.agilpay.net/';
     public static $client_id    = 'API-001';
@@ -16,14 +23,12 @@ class AgilPayRequest {
     public static $cvv      = "123";
 
     public static function request( ) {
-        self::includesModels( );
-
 		$client = new ApiClient( AgilPayRequest::$url );
 		// OAUTH 2.
 		$result = false;
 		$result = $client->Init( AgilPayRequest::$client_id, AgilPayRequest::$secret );
 
-        // CUSTOMER TOKENS
+		// CUSTOMER TOKENS
 		$resultTokens = $client->GetCustomerTokens( AgilPayRequest::$customer_id );
 
 		// Balance
@@ -32,7 +37,7 @@ class AgilPayRequest {
 		$balanceRequest->CustomerId = AgilPayRequest::$customer_id;
 		$resultBalance = $client->GetBalance( $balanceRequest );
 
-        // PAYMENT
+		// PAYMENT
 		$authorizationRequest = new AuthorizationRequest();
 		$authorizationRequest->MerchantKey = AgilPayRequest::$merchant_key;
 		$authorizationRequest->AccountNumber = AgilPayRequest::$card;
@@ -53,11 +58,4 @@ class AgilPayRequest {
 		$resultPayment = $client->Authorize( $authorizationRequest->getData() );
     }
 
-    public static function includesModels( ) {
-		require_once './ApiClient.php';
-		require_once '../models/class-account-type.php';
-		require_once '../models/class-balance-request.php';
-		require_once '../models/class-authorization-request.php';
-		
-    }
 }
