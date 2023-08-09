@@ -71,38 +71,10 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 	}
 
 	public function payment_fields(){
-		?>
-		<div>
-        	<h3>Detalles de Pago</h3>
-        	<p>Por favor, ingresa los detalles de tu tarjeta de crédito o débito:</p>
-			<table>
-				<tr>
-					<th>
-						<label for="agilpay_card_number">Número de Tarjeta:</label>
-					</th>
-					<td>
-						<input type="number" id="agilpay_card_number" name="agilpay_card_number" placeholder="XXXX-XXXX-XXXX-XXXX" required />
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="agilpay_card_expiry">Fecha de Expiración:</label>
-					</th>
-					<td>
-						<input type="date" id="agilpay_card_expiry" name="agilpay_card_expiry" placeholder="MM/AA" required />
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<label for="agilpay_card_cvv">CVV:</label>
-					</th>
-					<td>
-						<input type="number" id="agilpay_card_cvv" name="agilpay_card_cvv" placeholder="000" required />
-					</td>
-				</tr>
-			</table>
-        </div>
-		<?php
+		include WP_PLUGIN_DIR.'/agil-pay-woo/templates/payment-details.php';
+		echo "<script>";
+        include WP_PLUGIN_DIR.'/agil-pay-woo/templates/payment-details-app.js';
+        echo "</script>";
 	}
 
 }

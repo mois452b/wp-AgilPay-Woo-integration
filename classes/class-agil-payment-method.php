@@ -19,11 +19,6 @@ class AgilPaymentMethod {
         add_action( 'woocommerce_checkout_process', [__CLASS__, 'validate_agilpay_credentials']);
     }
 
-    public static function add_payment_method( $load_gateways ) {
-        $load_gateways[] = 'WC_Gateway_AgilPay';
-        return $load_gateways;
-    }
-
     public static function validate_agilpay_credentials(){
         if( isset( $_POST['payment_method'] ) && $_POST['payment_method']=='agilpay' ) {
             $error_message = "";
@@ -39,7 +34,21 @@ class AgilPaymentMethod {
                 $error_message .= "Card Number length no valid!";
             }
             //agilpay_card_expiry
-
+            if(
+                !isset( $_POST['agilpay_card_expiry'] ) ||
+                $_POST['agilpay_card_expiry']==''
+            ) {
+                 $error_message .= "Date Expire Required! <br/>";
+            } else if ( strlen( $_POST['agilpay_card_expiry'] )!=5 ) {
+                $error_message .= "Date Expire Length invalid<br/>";
+            } else {
+                $current_year = date('y');
+                $current_mount = date('m');
+                [$mount, $year] = explode('/',$_POST['agilpay_card_expiry']);
+                if( intval($mount) < 1 || intval($mount) > 12 ) $error_message .= "Invalid Mount<br/>";
+                if( intval($year) < intval($current_year) ) $error_message .= "Invalid Year<br/>";
+                if( intval($year) == intval($current_year) && intval($mount)<intval($current_mount) ) $error_message .= "Card Expired<br/>";
+            }
             //agilpay_card_cvv
             if(
                 !isset( $_POST['agilpay_card_cvv'] ) ||
@@ -58,4 +67,8 @@ class AgilPaymentMethod {
         }
     }
 
+    public static function add_payment_method( $load_gateways ) {
+        $load_gateways[] = 'WC_Gateway_AgilPay';
+        return $load_gateways;
+    }
 }
