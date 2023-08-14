@@ -2,10 +2,10 @@
 
 defined( 'ABSPATH' ) || exit;
 
-require_once './ApiClient.php';
-require_once '../models/class-account-type.php';
-require_once '../models/class-balance-request.php';
-require_once '../models/class-authorization-request.php';
+require_once 'class-api-client.php';
+require_once WP_PLUGIN_DIR . '/agil-pay-woo/models/class-account-type.php';
+require_once WP_PLUGIN_DIR . '/agil-pay-woo/models/class-balance-request.php';
+require_once WP_PLUGIN_DIR . '/agil-pay-woo/models/class-authorization-request.php';
 
 class AgilPayRequest {
     public static $url          = 'https://sandbox-webapi.agilpay.net/';

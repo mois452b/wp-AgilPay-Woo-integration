@@ -63,7 +63,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
         $order = wc_get_order( $order_id );
 
-		include './class-agil-pay-request.php';
+		include 'class-agil-pay-request.php';
 		AgilPayRequest::request( );
 
 		// WC()->cart->empty_cart();
