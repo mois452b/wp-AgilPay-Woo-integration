@@ -10,6 +10,33 @@ class ClientRequest {
         $this->baseUri = isset($config['base_uri']) ? $config['base_uri'] : '';
         $this->headers = isset($config['headers']) ? $config['headers'] : [];
     }
+    public function postTest($endpoint, $data = []) {
+        $url = $this->baseUri . ltrim($endpoint, '/');
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($data), // Proar tamben con http_build_query($data)
+        ]);
+        $response = curl_exec($curl);
+        if ($response === false) {
+            $error_message = curl_error($curl);
+            echo "Error: $error_message";
+            return null;
+        }
+        $response_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        if ($response_code !== 200) {
+            echo "Error en la respuesta HTTP. Código: $response_code";
+            return null;
+        }
+        curl_close($curl);
+        return $response;
+    }
 
     public function post($endpoint, $data = []) {
         return $this->request('POST', $endpoint, $data);
