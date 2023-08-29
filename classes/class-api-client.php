@@ -46,7 +46,7 @@ class ApiClient
             ]);
 
             // echo ( $response );
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode($response, true);
             // echo json_encode( $data );
             if (isset($data['token_type']) && isset($data['access_token'])) {
                 $result = $data['token_type'] . ' ' . $data['access_token'];
@@ -66,7 +66,7 @@ class ApiClient
                 'json' => $AuthorizationRequest,
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode( $response, true );
             return $data;
         } catch (GuzzleException $ex) {
             echo 'entro en exection';
@@ -83,7 +83,7 @@ class ApiClient
                 'json' => $AuthorizationRequest,
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode( $response, true );
             return $data;
         } catch (GuzzleException $ex) {
             echo $ex->getMessage();
@@ -99,10 +99,10 @@ class ApiClient
                 'query' => ['CustomerID' => $CustomerID],
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode($response, true);
             return $data;
-        } catch (GuzzleException $ex) {
-            echo $ex->getMessage();
+        } catch (GuzzleException $ex) {      
+            echo $ex->getMessage();   
         }
         return null;
     }
@@ -115,7 +115,7 @@ class ApiClient
                 'json' => $balanceRequest,
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode( $response, true );
             return $data;
         } catch (GuzzleException $ex) {
             echo $ex->getMessage();

@@ -57,7 +57,7 @@ class AgilPayRequest {
 			$authorizationRequest->CVV = AgilPayRequest::$cvv;
 
 			$resultPayment = $client->Authorize( $authorizationRequest->getData() );
-			return 'success';
+			return $resultPayment;
 		} catch (\Throwable $th) {
 			// return 'failed';
 			throw $th;
