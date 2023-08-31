@@ -3,6 +3,10 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
+
+require_once WP_PLUGIN_DIR . '/agil-pay-woo/classes/class-client-request.php';
+
+
 class ApiClient
 {
     public $ClientId;
@@ -15,7 +19,7 @@ class ApiClient
     public function __construct($baseUrl)
     {
         $this->BaseUrl = $baseUrl;
-        $this->client = new Client(['base_uri' => $baseUrl]);
+        $this->client = new ClientRequest(['base_uri' => $baseUrl]);
     }
 
     public function Init($clientId, $clientSecret)
@@ -31,7 +35,7 @@ class ApiClient
     {
         $result = null;
         try {
-            $client = new Client(['base_uri' => $_baseUrl]);
+            $client = new ClientRequest(['base_uri' => $_baseUrl]);
 
             $response = $client->post('oauth/token', [
                 'form_params' => [
@@ -41,7 +45,9 @@ class ApiClient
                 ]
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            // echo ( $response );
+            $data = json_decode($response, true);
+            // echo json_encode( $data );
             if (isset($data['token_type']) && isset($data['access_token'])) {
                 $result = $data['token_type'] . ' ' . $data['access_token'];
             }
@@ -60,7 +66,7 @@ class ApiClient
                 'json' => $AuthorizationRequest,
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode( $response, true );
             return $data;
         } catch (GuzzleException $ex) {
             echo 'entro en exection';
@@ -77,7 +83,7 @@ class ApiClient
                 'json' => $AuthorizationRequest,
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode( $response, true );
             return $data;
         } catch (GuzzleException $ex) {
             echo $ex->getMessage();
@@ -93,10 +99,10 @@ class ApiClient
                 'query' => ['CustomerID' => $CustomerID],
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode($response, true);
             return $data;
-        } catch (GuzzleException $ex) {
-            echo $ex->getMessage();
+        } catch (GuzzleException $ex) {      
+            echo $ex->getMessage();   
         }
         return null;
     }
@@ -109,7 +115,7 @@ class ApiClient
                 'json' => $balanceRequest,
             ]);
 
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode( $response, true );
             return $data;
         } catch (GuzzleException $ex) {
             echo $ex->getMessage();

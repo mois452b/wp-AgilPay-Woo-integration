@@ -14,6 +14,8 @@
  * @package WooCommerce
  */
 
+ include 'vendor/autoload.php';
+
  require_once 'classes/class-agil-payment-method.php';
  $nameclass = 'AgilPaymentMethod';
 
