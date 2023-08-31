@@ -21,6 +21,9 @@ class AgilPayRequest {
     public static $year     = "29";
     public static $zipcode  = "33167";
     public static $cvv      = "123";
+	
+    public static $customer_email	= "testuser@gmail.com";
+    public static $customer_name	= "test user";
 
     public static function request( ) {
 		try {
@@ -40,21 +43,21 @@ class AgilPayRequest {
 
 			// PAYMENT
 			$authorizationRequest = new AuthorizationRequest();
-			$authorizationRequest->MerchantKey = AgilPayRequest::$merchant_key;
-			$authorizationRequest->AccountNumber = AgilPayRequest::$card;
-			$authorizationRequest->ExpirationMonth = AgilPayRequest::$month;
-			$authorizationRequest->ExpirationYear = AgilPayRequest::$year;
-			$authorizationRequest->CustomerName = "Test User";
-			$authorizationRequest->CustomerID = AgilPayRequest::$customer_id;
-			$authorizationRequest->AccountType = AccountType::Credit_Debit;
-			$authorizationRequest->CustomerEmail = "testuser@gmail.com";
-			$authorizationRequest->ZipCode = AgilPayRequest::$zipcode;
-			$authorizationRequest->Amount = AgilPayRequest::$amount;
-			$authorizationRequest->Currency = "840";
-			$authorizationRequest->Tax = "0";
-			$authorizationRequest->Invoice = "123465465";
-			$authorizationRequest->Transaction_Detail = "payment information detail";
-			$authorizationRequest->CVV = AgilPayRequest::$cvv;
+			$authorizationRequest->MerchantKey 			= AgilPayRequest::$merchant_key;
+			$authorizationRequest->AccountNumber 		= AgilPayRequest::$card;
+			$authorizationRequest->ExpirationMonth 		= AgilPayRequest::$month;
+			$authorizationRequest->ExpirationYear 		= AgilPayRequest::$year;
+			$authorizationRequest->CustomerName 		= AgilPayRequest::$customer_name;
+			$authorizationRequest->CustomerID 			= AgilPayRequest::$customer_id;
+			$authorizationRequest->AccountType 			= AccountType::Credit_Debit;
+			$authorizationRequest->CustomerEmail 		= AgilPayRequest::$customer_email;
+			$authorizationRequest->ZipCode 				= AgilPayRequest::$zipcode;
+			$authorizationRequest->Amount 				= AgilPayRequest::$amount;
+			$authorizationRequest->Currency 			= "840";
+			$authorizationRequest->Tax 					= "0";
+			$authorizationRequest->Invoice 				= "123465465";
+			$authorizationRequest->Transaction_Detail 	= "payment from agil pay";
+			$authorizationRequest->CVV 					= AgilPayRequest::$cvv;
 
 			$resultPayment = $client->Authorize( $authorizationRequest->getData() );
 			return $resultPayment;
