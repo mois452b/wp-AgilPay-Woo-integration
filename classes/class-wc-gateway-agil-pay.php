@@ -36,6 +36,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
     public function init_form_fields() {
 		$this->form_fields = array(
 			'shop_id'         => array(
+				'field_name'  => 'agilpay_shop_id',
 				'title'       => 'ID Comercio',
 				'type'        => 'safe_text',
 				'description' => '',
@@ -43,6 +44,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 				'desc_tip'    => true,
 			),
 			'client_public_id'=> array(
+				'field_name'  => 'agilpay_client_public_id',
 				'title'       => 'Llave Publica',
 				'type'        => 'safe_text',
 				'description' => '',
@@ -50,6 +52,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 				'desc_tip'    => true,
 			),
 			'client_secrect_id'=> array(
+				'field_name'  => 'agilpay_client_secrect_id',
 				'title'       => 'Llave Privada',
 				'type'        => 'safe_text',
 				'description' => '',
