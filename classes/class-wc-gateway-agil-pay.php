@@ -5,19 +5,17 @@ defined( 'ABSPATH' ) || exit;
 
 class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 
-
     /**
 	 * Constructor for the gateway.
 	 */
 	public function __construct() {
-
 		$this->id                 = 'agilpay';
 		$this->icon               = apply_filters( 'woocommerce_agilpay_icon', '' );
 		$this->has_fields         = true;
-		$this->order_button_text  = "Pagar con Agil Pay";
+		$this->order_button_text  = "Realizar pago";
 		$this->method_title       = "Agil Pay Methods";
-		$this->method_description = "Agil Pay Methods Description";
-		$this->title			  = "Agil Pay";
+		$this->method_description = "Pagos con tarjeta de credito usando el servicio de Agil Pay";
+		$this->title			  = $this->get_option( 'title' );
 
 		// Load the settings.
 		$this->init_form_fields();
@@ -35,9 +33,17 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 
     public function init_form_fields() {
 		$this->form_fields = array(
+			'title'         => array(
+				'field_name'  => 'title',
+				'title'       => 'title method',
+				'type'        => 'safe_text',
+				'description' => '',
+				'default'     => 'Agil Pay',
+				'desc_tip'    => true,
+			),
 			'shop_id'         => array(
 				'field_name'  => 'agilpay_shop_id',
-				'title'       => 'ID Comercio',
+				'title'       => 'Merchant key',
 				'type'        => 'safe_text',
 				'description' => '',
 				'default'     => '',
@@ -45,7 +51,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 			),
 			'client_public_id'=> array(
 				'field_name'  => 'agilpay_client_public_id',
-				'title'       => 'Llave Publica',
+				'title'       => 'Client key',
 				'type'        => 'safe_text',
 				'description' => '',
 				'default'     => '',
@@ -53,7 +59,7 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 			),
 			'client_secrect_id'=> array(
 				'field_name'  => 'agilpay_client_secrect_id',
-				'title'       => 'Llave Privada',
+				'title'       => 'Secret key',
 				'type'        => 'safe_text',
 				'description' => '',
 				'default'     => '',
@@ -82,15 +88,24 @@ class WC_Gateway_AgilPay extends WC_Payment_Gateway {
 
 		$payRequest = AgilPayRequest::request( );
 
-		if( $payRequest['ResponseCode'] == '94' ) {
+		if( $payRequest['ResponseCode'] == '44' ) {
+			wc_add_notice( 'Credenciales invalidas.', 'error' );
 			return array(
-				'result'   	=> 'error',
+				'result'   	=> 'fail',
+				'message'	=> 'Autenticacion fallida.'
+			);
+		}
+		if( $payRequest['ResponseCode'] == '94' ) {
+            wc_add_notice( 'Transaccion duplicada.', 'error' );
+			return array(
+				'result'   	=> 'fail',
 				'message'	=> 'transaccion duplicada'
 			);
 		}
 		if( $payRequest['ResponseCode'] != '00' ) {
+            wc_add_notice( 'Error de tansaccion.', 'error' );
 			return array(
-				'result'   => 'error',
+				'result'   => 'fail',
 			);
 		}
 		$order->payment_complete();

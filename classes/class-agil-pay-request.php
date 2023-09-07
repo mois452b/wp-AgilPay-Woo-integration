@@ -32,6 +32,13 @@ class AgilPayRequest {
 			$result = false;
 			$result = $client->Init( AgilPayRequest::$client_id, AgilPayRequest::$secret );
 
+			if( !$result ) {
+				return [
+					'ResponseCode' 	=> 44,
+					'message'		=> 'Autenticacion fallida.'
+				];
+			};
+
 			// CUSTOMER TOKENS
 			$resultTokens = $client->GetCustomerTokens( AgilPayRequest::$customer_id );
 
@@ -62,6 +69,7 @@ class AgilPayRequest {
 			$resultPayment = $client->Authorize( $authorizationRequest->getData() );
 			return $resultPayment;
 		} catch (\Throwable $th) {
+			// echo json_ecode($th);
 			// return 'failed';
 			throw $th;
 		}
