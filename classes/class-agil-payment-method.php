@@ -43,11 +43,11 @@ class AgilPaymentMethod {
                 $error_message .= "Date Expire Length invalid<br/>";
             } else {
                 $current_year = date('y');
-                $current_mount = date('m');
-                [$mount, $year] = explode('/',$_POST['agilpay_card_expiry']);
-                if( intval($mount) < 1 || intval($mount) > 12 ) $error_message .= "Invalid Mount<br/>";
+                $current_month = date('m');
+                [$month, $year] = explode('/',$_POST['agilpay_card_expiry']);
+                if( intval($month) < 1 || intval($month) > 12 ) $error_message .= "Invalid Month<br/>";
                 if( intval($year) < intval($current_year) ) $error_message .= "Invalid Year<br/>";
-                if( intval($year) == intval($current_year) && intval($mount)<intval($current_mount) ) $error_message .= "Card Expired<br/>";
+                if( intval($year) == intval($current_year) && intval($month)<intval($current_month) ) $error_message .= "Card Expired<br/>";
             }
             //agilpay_card_cvv
             if(
