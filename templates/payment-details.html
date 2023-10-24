@@ -9,67 +9,40 @@
     <title>Document</title>
 </head>
 <body>
-<!-- component -->
-<div class="relative flex items-top justify-center min-h-screen bg-white dark:bg-gray-900 sm:items-center sm:pt-0">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="mt-8 overflow-hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="p-6 mr-2 bg-gray-100 dark:bg-gray-800 sm:rounded-lg">
-                        <h1 class="text-4xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight">
-                           Detalles de Pago
-                        </h1>
-                        <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400 mt-2">
-                           Por favor, ingresa los detalles de tu tarjeta de crédito o debito:
-                        </p>
-
-                        <div class="flex items-center mt-8 text-gray-600 dark:text-gray-400">
-                        
-
-                            <div class="ml-4 text-md tracking-wide font-semibold w-40">
-                               Número de Tarjeta:
-                            </div>
-                        </div>
-
-                        <div class="flex items-center mt-4 text-gray-600 dark:text-gray-400">
-                         
-                            <div class="ml-4 text-md tracking-wide font-semibold w-40">
-                               Fecha de Expiración: 
-                            </div>
-                        </div>
-
-                        <div class="flex items-center mt-2 text-gray-600 dark:text-gray-400">
-                        
-                            <div class="ml-4 text-md tracking-wide font-semibold w-40">
-                                CVV:
-                            </div>
-                        </div>
-                    </div>
-
-                    <form class="p-6 flex flex-col justify-center">
-                        <div class="flex flex-col">
-                            <label for="name" class="hidden">Full Name</label>
-                            <input type="name" name="name" id="name" placeholder="XXXX-XXXX-XXXX-XXXX" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
-                        </div>
-
-                        <div class="flex flex-col mt-2">
-                            <label for="email" class="hidden">Email</label>
-                            <input type="email" name="email" id="email" placeholder="MM/AA" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
-                        </div>
-
-                        <div class="flex flex-col mt-2">
-                            <label for="tel" class="hidden">Number</label>
-                            <input type="tel" name="tel" id="tel" placeholder="000" class="w-100 mt-2 py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
-                        </div>
-
-                        <button type="submit" class="md:w-32 bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300">
-                            Submit
-                        </button>
-                    </form>
-                </div>
-            </div>
+<div class="min-h-screen  py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+      <div class="max-w-md mx-auto">
+        <div class="flex items-center space-x-5">
+          <div class="h-14 w-14 bg-yellow-200 rounded-full flex flex-shrink-0 justify-center items-center text-yellow-500 text-2xl font-mono">i</div>
+          <div class="block pl-2 font-semibold text-xl self-start text-gray-700">
+            <h2 class="leading-relaxed">Detalles de Pago</h2>
+            <p class="text-sm text-gray-500 font-normal leading-relaxed">Por favor, ingresa los detalles de tu tarjeta de crédito o debito:</p>
+          </div>
         </div>
+        <div class="divide-y divide-gray-200">
+          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+            <div class="flex flex-col">
+              <label class="leading-loose">Número de Tarjeta:</label>
+              <input id="agilpay_card_number" name="agilpay_card_number" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="XXXX-XXXX-XXXX-XXXX">
+            </div>
+            <div class="flex flex-col">
+              <label class="leading-loose">Fecha de Expiración:</label>
+              <input id="agilpay_card_expiry" name="agilpay_card_expiry" type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="MM/AA">
+            </div>
+           
+            <div class="flex flex-col">
+              <label class="leading-loose">CVV:</label>
+              <input id="agilpay_card_cvv" name="agilpay_card_cvv"  type="text" class="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Optional">
+            </div>
+          </div>
+          <div class="pt-4 flex items-center space-x-4">
+              <button class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none">Pay</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 </body>
 </html>
-
-
