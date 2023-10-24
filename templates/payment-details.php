@@ -1,4 +1,3 @@
-
 <div>
     <h3>Detalles de Pago</h3>
     <p>Por favor, ingresa los detalles de tu tarjeta de crédito o debito:</p>
@@ -29,5 +28,3 @@
         </tr>
     </table>
 </div>
-
-
