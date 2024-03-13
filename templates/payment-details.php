@@ -1,7 +1,7 @@
 
 <div>
     <h3>Detalles de Pago</h3>
-    <p>Por favor, ingresa los detalles de tu tarjeta de crédito:</p>
+    <p>Por favor, ingresa los detalles de tu tarjeta de crédito o debito:</p>
     <table id="agilpay-app">
         <tr>
             <th>

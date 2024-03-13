@@ -45,7 +45,6 @@ class ApiClient
                 ]
             ]);
 
-            // echo ( $response );
             $data = json_decode($response, true);
             // echo json_encode( $data );
             if (isset($data['token_type']) && isset($data['access_token'])) {
